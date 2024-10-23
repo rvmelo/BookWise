@@ -1,3 +1,4 @@
+import { Card } from '@/components/card'
 import { CloseButton } from '@/components/closeButton'
 import { Input } from '@/components/input'
 import { LinkButton } from '@/components/linkButton'
@@ -13,6 +14,7 @@ export default function Home() {
       <NavigationItem Icon={ChartLineUp} title="Início" />
       <Input placeholder="Placeholder" />
       <Tag name="Computação" />
+      <Card rate={3} />
     </>
   )
 }
