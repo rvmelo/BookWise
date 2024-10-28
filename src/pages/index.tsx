@@ -3,6 +3,7 @@ import { CloseButton } from '@/components/closeButton'
 import { Input } from '@/components/input'
 import { LinkButton } from '@/components/linkButton'
 import { NavigationItem } from '@/components/navigationItem'
+import { SmallCard } from '@/components/smallCard'
 import { Tag } from '@/components/tag'
 import { ChartLineUp } from '@phosphor-icons/react'
 
@@ -15,6 +16,7 @@ export default function Home() {
       <Input placeholder="Placeholder" />
       <Tag name="Computação" />
       <Card rate={3} />
+      <SmallCard rate={4} />
     </>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import book from '../../../public/images/books/Book.png'
+import book from '../../../public/images/books/book.png'
 import {
   BottomSection,
   CardContainer,
