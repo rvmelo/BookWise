@@ -1,22 +1,43 @@
-import { Card } from '@/components/card'
-import { CloseButton } from '@/components/closeButton'
-import { Input } from '@/components/input'
-import { LinkButton } from '@/components/linkButton'
-import { NavigationItem } from '@/components/navigationItem'
-import { SmallCard } from '@/components/smallCard'
-import { Tag } from '@/components/tag'
-import { ChartLineUp } from '@phosphor-icons/react'
+import Image from 'next/image'
+import google from '../../../public/svg/google.svg'
+import github from '../../../public/svg/github.svg'
+import rocket from '../../../public/svg/rocket.svg'
+import {
+  BackgroundImage,
+  ButtonsContainer,
+  HomeContainer,
+  LeftSection,
+  LoginButton,
+  RightSection,
+  WelcomeContainer,
+} from './styles'
 
 export default function Home() {
   return (
-    <>
-      <LinkButton color="white" size="medium" />
-      <CloseButton onClick={() => undefined} />
-      <NavigationItem Icon={ChartLineUp} title="Início" />
-      <Input placeholder="Placeholder" />
-      <Tag name="Computação" />
-      <Card rate={3} />
-      <SmallCard rate={4} />
-    </>
+    <HomeContainer>
+      <LeftSection>
+        <BackgroundImage />
+      </LeftSection>
+      <RightSection>
+        <WelcomeContainer>
+          <h2>Boas vindas!</h2>
+          <span>Faça seu login ou acesse como visitante.</span>
+        </WelcomeContainer>
+        <ButtonsContainer>
+          <LoginButton>
+            <Image src={google} width={32} height={32} alt="google" />
+            <span>Entrar com Google</span>
+          </LoginButton>
+          <LoginButton>
+            <Image src={github} width={32} height={32} alt="github" />
+            <span>Entrar com GitHub</span>
+          </LoginButton>
+          <LoginButton>
+            <Image src={rocket} width={32} height={32} alt="visit" />
+            <span>Acessar como visitante</span>
+          </LoginButton>
+        </ButtonsContainer>
+      </RightSection>
+    </HomeContainer>
   )
 }
