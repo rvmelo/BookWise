@@ -11,6 +11,7 @@ import {
   RightSection,
   WelcomeContainer,
 } from './styles'
+import { signIn } from 'next-auth/react'
 
 export default function Home() {
   return (
@@ -24,7 +25,7 @@ export default function Home() {
           <span>Faça seu login ou acesse como visitante.</span>
         </WelcomeContainer>
         <ButtonsContainer>
-          <LoginButton>
+          <LoginButton onClick={() => signIn('google')}>
             <Image src={google} width={32} height={32} alt="google" />
             <span>Entrar com Google</span>
           </LoginButton>
