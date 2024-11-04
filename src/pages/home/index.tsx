@@ -11,9 +11,23 @@ import {
   RightSection,
   WelcomeContainer,
 } from './styles'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Home() {
+  const { data } = useSession()
+
+  const router = useRouter()
+
+  useEffect(() => {
+    const { user } = data || {}
+
+    if (user?.email) {
+      router.push('/dashboard')
+    }
+  }, [data, router])
+
   return (
     <HomeContainer>
       <LeftSection>
@@ -29,7 +43,7 @@ export default function Home() {
             <Image src={google} width={32} height={32} alt="google" />
             <span>Entrar com Google</span>
           </LoginButton>
-          <LoginButton>
+          <LoginButton onClick={() => signIn('github')}>
             <Image src={github} width={32} height={32} alt="github" />
             <span>Entrar com GitHub</span>
           </LoginButton>

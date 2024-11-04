@@ -1,14 +1,14 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
-// import GithubProvider from 'next-auth/providers/github'
+import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
-    // GithubProvider({
-    //   clientId: process.env.GITHUB_ID ?? '',
-    //   clientSecret: process.env.GITHUB_SECRET ?? '',
-    // }),
+    GithubProvider({
+      clientId: process.env.GITHUB_ID ?? '',
+      clientSecret: process.env.GITHUB_SECRET ?? '',
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
@@ -24,26 +24,17 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ account }) {
       if (
-        account?.scope?.includes(
-          'https://www.googleapis.com/auth/userinfo.email',
-        ) &&
-        account?.scope?.includes(
-          'https://www.googleapis.com/auth/userinfo.profile',
-        )
-      ) {
-        return '/dashboard'
-      }
-
-      if (
         !account?.scope?.includes(
           'https://www.googleapis.com/auth/userinfo.email',
         ) ||
-        !account?.scope?.includes(
+        (!account?.scope?.includes(
           'https://www.googleapis.com/auth/userinfo.profile',
-        )
+        ) &&
+          !account?.scope?.includes('read:user,user:email'))
       ) {
         return '/'
       }
+
       return true
     },
   },
