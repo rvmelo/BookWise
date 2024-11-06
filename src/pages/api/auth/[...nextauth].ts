@@ -8,6 +8,11 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? '',
       clientSecret: process.env.GITHUB_SECRET ?? '',
+      authorization: {
+        params: {
+          scope: 'read:user,user:email',
+        },
+      },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
@@ -26,11 +31,11 @@ export const authOptions: NextAuthOptions = {
       if (
         !account?.scope?.includes(
           'https://www.googleapis.com/auth/userinfo.email',
-        ) ||
-        (!account?.scope?.includes(
+        ) &&
+        !account?.scope?.includes(
           'https://www.googleapis.com/auth/userinfo.profile',
         ) &&
-          !account?.scope?.includes('read:user,user:email'))
+        !account?.scope?.includes('read:user,user:email')
       ) {
         return '/'
       }
