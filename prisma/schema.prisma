@@ -84,7 +84,7 @@ model Account {
   session_state       String?
   user                User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  @@unique([provider, provider_account_id])
+  @@unique([provider, provider_account_id], name: "provider_provider_account_id")
   @@map("accounts")
 }
 

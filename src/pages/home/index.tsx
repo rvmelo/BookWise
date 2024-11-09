@@ -23,7 +23,7 @@ export default function Home() {
   useEffect(() => {
     const { user } = data || {}
 
-    if (user?.email) {
+    if (user?.name) {
       router.push('/dashboard')
     }
   }, [data, router])

@@ -1,8 +1,10 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
+import MyAdapter from './prisma-adapter'
 
 export const authOptions: NextAuthOptions = {
+  adapter: MyAdapter(),
   // Configure one or more authentication providers
   providers: [
     GithubProvider({
@@ -42,6 +44,10 @@ export const authOptions: NextAuthOptions = {
 
       return true
     },
+  },
+  session: {
+    // Set to jwt in order to CredentialsProvider works properly
+    strategy: 'jwt',
   },
 }
 
