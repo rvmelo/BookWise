@@ -44,10 +44,12 @@ export const authOptions: NextAuthOptions = {
 
       return true
     },
-  },
-  session: {
-    // Set to jwt in order to CredentialsProvider works properly
-    strategy: 'jwt',
+    async session({ session, user }) {
+      return {
+        ...session,
+        user,
+      }
+    },
   },
 }
 
