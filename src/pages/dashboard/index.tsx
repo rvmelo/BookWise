@@ -1,5 +1,7 @@
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
+import { DashboardContainer, MenuGrid } from './styles'
+import { UserMenu } from '@/components/UserMenu'
 
 export default function Dashboard() {
   const session = useSession()
@@ -9,8 +11,10 @@ export default function Dashboard() {
   }, [session])
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-    </div>
+    <DashboardContainer>
+      <MenuGrid>
+        <UserMenu />
+      </MenuGrid>
+    </DashboardContainer>
   )
 }

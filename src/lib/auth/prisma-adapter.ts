@@ -18,7 +18,7 @@ export default function MyAdapter(): Adapter {
         avatar_url: prismaUser.avatar_url,
         email: '',
         emailVerified: null,
-        image: null,
+        image: prismaUser.avatar_url,
       }
     },
     async getUser(id) {
@@ -38,7 +38,7 @@ export default function MyAdapter(): Adapter {
         avatar_url: user.avatar_url,
         email: '',
         emailVerified: null,
-        image: null,
+        image: user.avatar_url,
       }
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -70,7 +70,7 @@ export default function MyAdapter(): Adapter {
         avatar_url: user.avatar_url,
         email: '',
         emailVerified: null,
-        image: null,
+        image: user.avatar_url,
       }
     },
     async updateUser(user) {
@@ -90,7 +90,7 @@ export default function MyAdapter(): Adapter {
         avatar_url: prismaUser.avatar_url,
         email: '',
         emailVerified: null,
-        image: null,
+        image: prismaUser.avatar_url,
       }
     },
     async deleteUser(userId: string) {
@@ -170,7 +170,7 @@ export default function MyAdapter(): Adapter {
           avatar_url: user.avatar_url,
           email: '',
           emailVerified: null,
-          image: null,
+          image: user.avatar_url,
         },
       }
     },
