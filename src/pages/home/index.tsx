@@ -47,7 +47,7 @@ export default function Home() {
             <Image src={github} width={32} height={32} alt="github" />
             <span>Entrar com GitHub</span>
           </LoginButton>
-          <LoginButton>
+          <LoginButton onClick={() => router.push('/dashboard')}>
             <Image src={rocket} width={32} height={32} alt="visit" />
             <span>Acessar como visitante</span>
           </LoginButton>

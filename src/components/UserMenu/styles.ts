@@ -47,9 +47,20 @@ export const SignOutIcon = styled(SignOut, {
   color: '#F75A68',
   width: '1.25rem',
   height: '1.25rem',
+
+  variants: {
+    isLoggedIn: {
+      true: {
+        color: '#F75A68',
+      },
+      false: {
+        color: '$green100',
+      },
+    },
+  },
 })
 
-export const LogOutButton = styled('button', {
+export const AuthButton = styled('button', {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
