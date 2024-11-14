@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import book from '../../../public/images/books/book.png'
 import {
   BottomSection,
   CardContainer,
@@ -15,16 +14,27 @@ import {
 interface CardProps {
   rate: number
   rateLimit?: number
+  bookName: string
+  bookSummary: string
+  author: string
+  coverUrl: string
 }
 
-export const Card: React.FC<CardProps> = ({ rate, rateLimit = 5 }) => {
+export const Card: React.FC<CardProps> = ({
+  rate,
+  rateLimit = 5,
+  bookName,
+  bookSummary,
+  author,
+  coverUrl,
+}) => {
   const starsArray = Array.from({ length: rateLimit })
 
   const starsInfo = starsArray.map((_, i) => i <= rate - 1)
 
   return (
     <CardContainer>
-      <Image className="closeImg" src={book} width={108} height={152} alt="" />
+      <Image src={coverUrl} width={108} height={152} alt="" />
       <InfoContainer>
         <TopSection>
           <Header>
@@ -40,15 +50,12 @@ export const Card: React.FC<CardProps> = ({ rate, rateLimit = 5 }) => {
             </StarsContainer>
           </Header>
           <TitleContainer>
-            <h2>Entendendo Algoritmos</h2>
-            <span>Aditya Bhargava</span>
+            <h2>{bookName}</h2>
+            <span>{author}</span>
           </TitleContainer>
         </TopSection>
         <BottomSection>
-          <p>
-            Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis.
-            Penatibus id vestibulum imperdiet a at imperdiet lectu...
-          </p>
+          <p>{bookSummary}</p>
         </BottomSection>
       </InfoContainer>
     </CardContainer>

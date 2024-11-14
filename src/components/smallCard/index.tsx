@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import book from '../../../public/images/books/book.png'
+import book from '../../../public/images/books/a-revolucao-dos-bixos.jpg'
 import {
   ContentContainer,
   InfoCOntainer,
@@ -24,7 +24,7 @@ export const SmallCard: React.FC<SmallCardProps> = ({
 
   return (
     <SmallCardContainer>
-      <Image className="closeImg" src={book} width={64} height={94} alt="" />
+      <Image src={book} width={64} height={94} alt="" />
       <ContentContainer>
         <InfoCOntainer>
           <h2>A revolução dos bichos</h2>
