@@ -38,6 +38,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
       id: true,
       rate: true,
       created_at: true,
+      user: {
+        select: {
+          name: true,
+          avatar_url: true,
+        },
+      },
       book: {
         select: {
           name: true,
@@ -53,6 +59,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const newBooksData = {
       ...bookData,
       created_at: bookData.created_at.toISOString(),
+      user: {
+        ...bookData.user,
+        avatarUrl: bookData.user.avatar_url,
+      },
       book: {
         ...bookData.book,
         coverUrl: bookData.book.cover_url.slice(6) || '',

@@ -10,6 +10,8 @@ import {
   TitleContainer,
   TopSection,
 } from './styles'
+import { useSession } from 'next-auth/react'
+import { LoggedInInfo } from './components/loggedInInfo'
 
 interface CardProps {
   rate: number
@@ -18,6 +20,8 @@ interface CardProps {
   bookSummary: string
   author: string
   coverUrl: string
+  userName?: string
+  userAvatarUrl?: string
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -27,10 +31,17 @@ export const Card: React.FC<CardProps> = ({
   bookSummary,
   author,
   coverUrl,
+  userName,
+  userAvatarUrl,
 }) => {
   const starsArray = Array.from({ length: rateLimit })
 
   const starsInfo = starsArray.map((_, i) => i <= rate - 1)
+
+  const session = useSession()
+
+  const shouldDisplayAdditionalInfo =
+    session.status === 'authenticated' && userName
 
   return (
     <CardContainer>
@@ -38,7 +49,10 @@ export const Card: React.FC<CardProps> = ({
       <InfoContainer>
         <TopSection>
           <Header>
-            <span>Hoje</span>
+            {!shouldDisplayAdditionalInfo && <span>Hoje</span>}
+            {shouldDisplayAdditionalInfo && (
+              <LoggedInInfo userName={userName} userAvatarUrl={userAvatarUrl} />
+            )}
             <StarsContainer>
               {starsInfo.map((star, i) =>
                 star ? (

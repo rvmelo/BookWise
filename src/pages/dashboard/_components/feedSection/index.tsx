@@ -11,10 +11,11 @@ import {
   RecentEvaluationContainer,
   TitleContainer,
 } from './styles'
-import { Book } from '@prisma/client'
+import { Book, User } from '@prisma/client'
 
 export interface BookData {
   book: Omit<Book, 'cover_url'> & { coverUrl: string }
+  user: Pick<User, 'name'> & { avatarUrl: string }
   rate: number
   id: string
 }
@@ -47,7 +48,8 @@ export const FeedSection: React.FC<{ booksData: BookData[] }> = ({
         <span>Avaliações mais recentes</span>
         <EvaluationContainer>
           {booksData.map((bookData) => {
-            const { name, summary, author, coverUrl } = bookData.book || ''
+            const { name, summary, author, coverUrl } = bookData.book || {}
+            const { name: userName, avatarUrl } = bookData.user || {}
 
             return (
               <Card
@@ -57,6 +59,8 @@ export const FeedSection: React.FC<{ booksData: BookData[] }> = ({
                 bookSummary={summary}
                 author={author}
                 coverUrl={coverUrl}
+                userName={userName}
+                userAvatarUrl={avatarUrl}
               />
             )
           })}
