@@ -15,7 +15,7 @@ interface AuthenticatedInfoProps {
   createdAt: string | Date
 }
 
-export const LoggedInInfo: React.FC<AuthenticatedInfoProps> = ({
+export const UserInfo: React.FC<AuthenticatedInfoProps> = ({
   userName,
   userAvatarUrl,
   createdAt,

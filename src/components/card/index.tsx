@@ -10,8 +10,7 @@ import {
   TitleContainer,
   TopSection,
 } from './styles'
-import { useSession } from 'next-auth/react'
-import { LoggedInInfo } from './components/loggedInInfo'
+import { UserInfo } from './components/userInfo'
 import { formatTimeUntilNow } from '@/utils/formatTimeUntilNow'
 import Link from 'next/link'
 
@@ -42,10 +41,7 @@ export const Card: React.FC<CardProps> = ({
 
   const starsInfo = starsArray.map((_, i) => i <= rate - 1)
 
-  const session = useSession()
-
-  const shouldDisplayAdditionalInfo =
-    session.status === 'authenticated' && userName
+  const shouldDisplayAdditionalInfo = userName
 
   return (
     <CardContainer>
@@ -57,7 +53,7 @@ export const Card: React.FC<CardProps> = ({
               <span>{formatTimeUntilNow(createdAt)}</span>
             )}
             {shouldDisplayAdditionalInfo && (
-              <LoggedInInfo
+              <UserInfo
                 userName={userName}
                 userAvatarUrl={userAvatarUrl}
                 createdAt={createdAt}
