@@ -16,6 +16,7 @@ import { Book, User } from '@prisma/client'
 export interface BookData {
   book: Omit<Book, 'cover_url'> & { coverUrl: string }
   user: Pick<User, 'name'> & { avatarUrl: string }
+  created_at: string
   rate: number
   id: string
 }
@@ -42,6 +43,7 @@ export const FeedSection: React.FC<{ booksData: BookData[] }> = ({
           bookSummary="Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget"
           author="Aditya Y. Bhargava"
           coverUrl="/images/books/entendendo-algoritmos.jpg"
+          createdAt={new Date()}
         />
       </LastReadingContainer>
       <RecentEvaluationContainer>
@@ -61,6 +63,7 @@ export const FeedSection: React.FC<{ booksData: BookData[] }> = ({
                 coverUrl={coverUrl}
                 userName={userName}
                 userAvatarUrl={avatarUrl}
+                createdAt={bookData.created_at}
               />
             )
           })}

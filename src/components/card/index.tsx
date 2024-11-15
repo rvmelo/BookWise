@@ -12,6 +12,8 @@ import {
 } from './styles'
 import { useSession } from 'next-auth/react'
 import { LoggedInInfo } from './components/loggedInInfo'
+import { formatTimeUntilNow } from '@/utils/formatTimeUntilNow'
+import Link from 'next/link'
 
 interface CardProps {
   rate: number
@@ -22,6 +24,7 @@ interface CardProps {
   coverUrl: string
   userName?: string
   userAvatarUrl?: string
+  createdAt: string | Date
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -33,6 +36,7 @@ export const Card: React.FC<CardProps> = ({
   coverUrl,
   userName,
   userAvatarUrl,
+  createdAt,
 }) => {
   const starsArray = Array.from({ length: rateLimit })
 
@@ -49,9 +53,15 @@ export const Card: React.FC<CardProps> = ({
       <InfoContainer>
         <TopSection>
           <Header>
-            {!shouldDisplayAdditionalInfo && <span>Hoje</span>}
+            {!shouldDisplayAdditionalInfo && (
+              <span>{formatTimeUntilNow(createdAt)}</span>
+            )}
             {shouldDisplayAdditionalInfo && (
-              <LoggedInInfo userName={userName} userAvatarUrl={userAvatarUrl} />
+              <LoggedInInfo
+                userName={userName}
+                userAvatarUrl={userAvatarUrl}
+                createdAt={createdAt}
+              />
             )}
             <StarsContainer>
               {starsInfo.map((star, i) =>
@@ -69,7 +79,13 @@ export const Card: React.FC<CardProps> = ({
           </TitleContainer>
         </TopSection>
         <BottomSection>
-          <p>{bookSummary}</p>
+          {bookSummary.length > 231 ? (
+            <p>
+              {bookSummary.slice(0, 231)}...<Link href="/"> Ver mais</Link>
+            </p>
+          ) : (
+            <p>{bookSummary}</p>
+          )}
         </BottomSection>
       </InfoContainer>
     </CardContainer>

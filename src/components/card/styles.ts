@@ -50,10 +50,12 @@ export const TitleContainer = styled('div', {
   },
 
   span: {
-    fontSize: '0.875rem',
+    fontSize: '$sm',
     fontWeight: '$regular',
     color: '$gray400',
   },
+
+  marginBottom: '$6',
 })
 
 export const BottomSection = styled('div', {
@@ -62,6 +64,13 @@ export const BottomSection = styled('div', {
     fontWeight: '$regular',
     color: '$gray300',
     lineHeight: '22.4px',
+  },
+
+  a: {
+    color: '$purple100',
+    fontSize: '$sm',
+    fontWeight: '$regular',
+    textDecoration: 'none',
   },
 })
 

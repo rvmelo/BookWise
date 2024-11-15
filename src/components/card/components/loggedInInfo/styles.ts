@@ -12,6 +12,12 @@ export const UserInfoContainer = styled('div', {
   justifyContent: 'flex-start',
   gap: '4px',
 
+  span: {
+    fontSize: '$sm',
+    fontWeight: '$regular',
+    color: '$gray400',
+  },
+
   h2: {
     fontSize: '$md',
     fontWeight: '$regular',
