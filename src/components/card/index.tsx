@@ -2,88 +2,93 @@ import React from 'react'
 import Image from 'next/image'
 import {
   BottomSection,
+  BottomSectionTextContent,
   CardContainer,
   Header,
-  InfoContainer,
   StarsContainer,
   StyledStar,
+  TimeDisplayWrapper,
   TitleContainer,
-  TopSection,
 } from './styles'
 import { UserInfo } from './components/userInfo'
 import { formatTimeUntilNow } from '@/utils/formatTimeUntilNow'
 import Link from 'next/link'
 
+type BookData = {
+  name: string
+  summary: string
+  author: string
+  coverUrl: string
+}
+
+type UserData = {
+  name: string
+  avatarUrl?: string
+}
+
 interface CardProps {
   rate: number
   rateLimit?: number
-  bookName: string
-  bookSummary: string
-  author: string
-  coverUrl: string
-  userName?: string
-  userAvatarUrl?: string
+  book: BookData
+  user?: UserData
   createdAt: string | Date
 }
 
 export const Card: React.FC<CardProps> = ({
   rate,
   rateLimit = 5,
-  bookName,
-  bookSummary,
-  author,
-  coverUrl,
-  userName,
-  userAvatarUrl,
+  book,
+  user,
   createdAt,
 }) => {
   const starsArray = Array.from({ length: rateLimit })
 
   const starsInfo = starsArray.map((_, i) => i <= rate - 1)
 
-  const shouldDisplayAdditionalInfo = userName
+  const shouldDisplayHeader = !!user
 
   return (
-    <CardContainer>
-      <Image src={coverUrl} width={108} height={152} alt="" />
-      <InfoContainer>
-        <TopSection>
-          <Header>
-            {!shouldDisplayAdditionalInfo && (
-              <span>{formatTimeUntilNow(createdAt)}</span>
+    <CardContainer shouldDisplayHeader={shouldDisplayHeader}>
+      {shouldDisplayHeader && (
+        <Header>
+          <UserInfo
+            userName={user.name}
+            userAvatarUrl={user.avatarUrl}
+            createdAt={createdAt}
+          />
+          <StarsContainer>
+            {starsInfo.map((star, i) =>
+              star ? (
+                <StyledStar key={i} size={16} weight="fill" />
+              ) : (
+                <StyledStar key={i} size={16} />
+              ),
             )}
-            {shouldDisplayAdditionalInfo && (
-              <UserInfo
-                userName={userName}
-                userAvatarUrl={userAvatarUrl}
-                createdAt={createdAt}
-              />
-            )}
-            <StarsContainer>
-              {starsInfo.map((star, i) =>
-                star ? (
-                  <StyledStar key={i} size={16} weight="fill" />
-                ) : (
-                  <StyledStar key={i} size={16} />
-                ),
-              )}
-            </StarsContainer>
-          </Header>
+          </StarsContainer>
+        </Header>
+      )}
+      <BottomSection>
+        <Image src={book.coverUrl} width={108} height={152} alt="" />
+        <BottomSectionTextContent>
           <TitleContainer>
-            <h2>{bookName}</h2>
-            <span>{author}</span>
+            {!shouldDisplayHeader && (
+              <TimeDisplayWrapper>
+                <time>{formatTimeUntilNow(new Date())}</time>
+              </TimeDisplayWrapper>
+            )}
+
+            <h2>{book.name}</h2>
+            <span>{book.author}</span>
           </TitleContainer>
-        </TopSection>
-        <BottomSection>
-          {bookSummary.length > 231 ? (
+          {book.summary.length > 231 ? (
             <p>
-              {bookSummary.slice(0, 231)}...<Link href="/"> Ver mais</Link>
+              {book.summary.slice(0, 231)}...<Link href="/"> Ver mais</Link>
             </p>
           ) : (
-            <p>{bookSummary}</p>
+            <p>{book.summary}</p>
           )}
-        </BottomSection>
-      </InfoContainer>
+        </BottomSectionTextContent>
+      </BottomSection>
     </CardContainer>
   )
 }

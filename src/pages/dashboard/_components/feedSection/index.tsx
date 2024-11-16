@@ -39,10 +39,13 @@ export const FeedSection: React.FC<{ booksData: BookData[] }> = ({
         </LastReadingHeader>
         <Card
           rate={4}
-          bookName="Entendendo Algoritmos"
-          bookSummary="Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget"
-          author="Aditya Y. Bhargava"
-          coverUrl="/images/books/entendendo-algoritmos.jpg"
+          book={{
+            name: 'Entendendo Algoritmos',
+            summary:
+              'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget',
+            author: 'Aditya Y. Bhargava',
+            coverUrl: '/images/books/entendendo-algoritmos.jpg',
+          }}
           createdAt={new Date()}
         />
       </LastReadingContainer>
@@ -50,19 +53,15 @@ export const FeedSection: React.FC<{ booksData: BookData[] }> = ({
         <span>Avaliações mais recentes</span>
         <EvaluationContainer>
           {booksData.map((bookData) => {
-            const { name, summary, author, coverUrl } = bookData.book || {}
-            const { name: userName, avatarUrl } = bookData.user || {}
+            const { book } = bookData || {}
+            const { user } = bookData || {}
 
             return (
               <Card
                 key={bookData.id}
                 rate={Number(bookData.rate)}
-                bookName={name}
-                bookSummary={summary}
-                author={author}
-                coverUrl={coverUrl}
-                userName={userName}
-                userAvatarUrl={avatarUrl}
+                book={book}
+                user={user}
                 createdAt={bookData.created_at}
               />
             )

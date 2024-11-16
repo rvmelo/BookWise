@@ -26,7 +26,7 @@ export const UserInfo: React.FC<AuthenticatedInfoProps> = ({
         <AvatarBorder>
           <AvatarWrapper>
             {userAvatarUrl && (
-              <Image src={userAvatarUrl} alt="" width={32} height={32} />
+              <Image src={userAvatarUrl} alt="" width={40} height={40} />
             )}
           </AvatarWrapper>
         </AvatarBorder>

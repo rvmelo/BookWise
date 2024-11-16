@@ -36,8 +36,8 @@ export const AvatarWrapper = styled('div', {
 })
 
 export const AvatarBorder = styled('div', {
-  width: '2rem',
-  height: '2rem',
+  width: '2.5rem',
+  height: '2.5rem',
   borderRadius: '999px',
   background: 'linear-gradient(90deg, #7FD1CC, #9694F5)',
   overflow: 'hidden',

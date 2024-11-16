@@ -9,25 +9,24 @@ export const CardContainer = styled('div', {
   maxWidth: '37.5rem',
 
   display: 'flex',
-  flexDirection: 'row',
-  gap: '1.5rem',
+  flexDirection: 'column',
+  gap: '$8',
 
   '&:hover': {
     cursor: 'pointer',
     border: '1px solid $gray500',
   },
-})
 
-export const InfoContainer = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-})
-
-export const TopSection = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.75rem',
+  variants: {
+    shouldDisplayHeader: {
+      true: {
+        background: '$gray700',
+      },
+      false: {
+        background: '$gray600',
+      },
+    },
+  },
 })
 
 export const Header = styled('div', {
@@ -36,10 +35,19 @@ export const Header = styled('div', {
   justifyContent: 'space-between',
 
   span: {
-    fontSize: '0.875rem',
+    fontSize: '$sm',
     fontWeight: '$regular',
     color: '$gray300',
   },
+})
+
+export const TimeDisplayWrapper = styled('div', {
+  time: {
+    fontWeight: '$regular',
+    fontSize: '$sm',
+    color: '$gray300',
+  },
+  marginBottom: '$3',
 })
 
 export const TitleContainer = styled('div', {
@@ -54,11 +62,13 @@ export const TitleContainer = styled('div', {
     fontWeight: '$regular',
     color: '$gray400',
   },
-
-  marginBottom: '$6',
 })
 
 export const BottomSection = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '$5',
+
   p: {
     fontSize: '0.875rem',
     fontWeight: '$regular',
@@ -82,4 +92,10 @@ export const StarsContainer = styled('div', {
 
 export const StyledStar = styled(Star, {
   color: '$purple100',
+})
+
+export const BottomSectionTextContent = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 })
