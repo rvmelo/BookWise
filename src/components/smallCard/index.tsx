@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import book from '../../../public/images/books/a-revolucao-dos-bixos.jpg'
 import {
   ContentContainer,
   InfoCOntainer,
@@ -12,11 +11,17 @@ import {
 interface SmallCardProps {
   rate: number
   rateLimit?: number
+  name: string
+  author: string
+  coverUrl?: string
 }
 
 export const SmallCard: React.FC<SmallCardProps> = ({
   rate,
   rateLimit = 5,
+  name,
+  author,
+  coverUrl,
 }) => {
   const starsArray = Array.from({ length: rateLimit })
 
@@ -24,11 +29,11 @@ export const SmallCard: React.FC<SmallCardProps> = ({
 
   return (
     <SmallCardContainer>
-      <Image src={book} width={64} height={94} alt="" />
+      {coverUrl && <Image src={coverUrl} width={64} height={94} alt="" />}
       <ContentContainer>
         <InfoCOntainer>
-          <h2>A revolução dos bichos</h2>
-          <span>George Orwell</span>
+          {name.length > 34 ? <h2>{name.slice(0, 34)}...</h2> : <h2>{name}</h2>}
+          <span>{author}</span>
         </InfoCOntainer>
         <StarsContainer>
           {starsInfo.map((star, i) =>

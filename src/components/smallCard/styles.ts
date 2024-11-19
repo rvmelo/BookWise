@@ -19,12 +19,9 @@ export const SmallCardContainer = styled('div', {
 })
 
 export const ContentContainer = styled('div', {
-  height: '100%',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-
-  gap: '2.125rem',
 })
 
 export const InfoCOntainer = styled('div', {

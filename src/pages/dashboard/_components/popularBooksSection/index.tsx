@@ -7,8 +7,15 @@ import {
   PopularBooksContainer,
   PopularBooksSectionContainer,
 } from './styles'
+import { Book, Rating } from '@prisma/client'
 
-export const PopularBooksSection: React.FC = () => {
+export type BookEvaluationData = Pick<Book, 'id' | 'name' | 'author'> & {
+  ratings: Pick<Rating, 'id'>[]
+} & { coverUrl: string; avgRate: number }
+
+export const PopularBooksSection: React.FC<{
+  bookEvaluationsData: BookEvaluationData[]
+}> = ({ bookEvaluationsData }) => {
   return (
     <PopularBooksSectionContainer>
       <HeaderContainer>
@@ -18,7 +25,17 @@ export const PopularBooksSection: React.FC = () => {
         </Link>
       </HeaderContainer>
       <PopularBooksContainer>
-        <SmallCard rate={3} />
+        {bookEvaluationsData.map((bookEvaluation) => {
+          return (
+            <SmallCard
+              key={bookEvaluation.id}
+              rate={bookEvaluation.avgRate}
+              name={bookEvaluation.name}
+              author={bookEvaluation.author}
+              coverUrl={bookEvaluation.coverUrl}
+            />
+          )
+        })}
       </PopularBooksContainer>
     </PopularBooksSectionContainer>
   )

@@ -21,9 +21,9 @@ export interface BookData {
   id: string
 }
 
-export const FeedSection: React.FC<{ booksData: BookData[] }> = ({
-  booksData,
-}) => {
+export const FeedSection: React.FC<{
+  booksData: BookData[]
+}> = ({ booksData }) => {
   return (
     <FeedSectionContainer>
       <TitleContainer>
