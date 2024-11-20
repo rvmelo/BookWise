@@ -6,15 +6,17 @@ interface NavigationItemProps {
   Icon: Icon
   title: string
   isSelected?: boolean
+  onClick: () => void
 }
 
 export const NavigationItem: React.FC<NavigationItemProps> = ({
   Icon,
   title,
   isSelected = false,
+  onClick,
 }) => {
   return (
-    <NavigationItemContainer>
+    <NavigationItemContainer onClick={() => onClick()}>
       {isSelected && <SelectedBar />}
       <ItemContent isSelected={isSelected}>
         <Icon size={24} />

@@ -33,7 +33,7 @@ export const FeedSection: React.FC<{
       <LastReadingContainer>
         <LastReadingHeader>
           <span>Sua última leitura</span>
-          <Link href="/">
+          <Link href="/explore">
             Ver todas <ArrowRightIcon />
           </Link>
         </LastReadingHeader>

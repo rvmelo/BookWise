@@ -15,11 +15,25 @@ import Image from 'next/image'
 
 import book from '../../../public/svg/book.svg'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import {
+  NavigationPages,
+  useStateNavigation,
+} from '@/contexts/navigationStateProvider'
+import { useRouter } from 'next/router'
 
 export const UserMenu: React.FC = () => {
   const { data } = useSession()
 
   const { user } = data || {}
+
+  const router = useRouter()
+
+  const { setCurrentPage, currentPage } = useStateNavigation()
+
+  const handleNavigation = (page: NavigationPages) => {
+    setCurrentPage(page)
+    router.push(page)
+  }
 
   return (
     <UserMenuContainer>
@@ -29,9 +43,26 @@ export const UserMenu: React.FC = () => {
           <h2>BookWise</h2>
         </TitleContainer>
         <NavigationMenuContainer>
-          <NavigationItem title="Início" Icon={ChartLineUp} />
-          <NavigationItem title="Explorar" Icon={Binoculars} />
-          {user?.name && <NavigationItem title="Perfil" Icon={User} />}
+          <NavigationItem
+            title="Início"
+            Icon={ChartLineUp}
+            onClick={() => handleNavigation(NavigationPages.HOME)}
+            isSelected={currentPage === NavigationPages.HOME}
+          />
+          <NavigationItem
+            title="Explorar"
+            Icon={Binoculars}
+            onClick={() => handleNavigation(NavigationPages.EXPLORE)}
+            isSelected={currentPage === NavigationPages.EXPLORE}
+          />
+          {user?.name && (
+            <NavigationItem
+              title="Perfil"
+              Icon={User}
+              onClick={() => handleNavigation(NavigationPages.PROFILE)}
+              isSelected={currentPage === NavigationPages.PROFILE}
+            />
+          )}
         </NavigationMenuContainer>
       </ContentSection>
       {user?.name && (

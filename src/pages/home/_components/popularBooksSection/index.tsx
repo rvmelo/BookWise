@@ -20,7 +20,7 @@ export const PopularBooksSection: React.FC<{
     <PopularBooksSectionContainer>
       <HeaderContainer>
         <span>Livros populares</span>
-        <Link href="/">
+        <Link href="/explore">
           Ver todas <ArrowRightIcon />
         </Link>
       </HeaderContainer>

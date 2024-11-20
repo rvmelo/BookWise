@@ -2,6 +2,7 @@
 
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
+import { NavigationStateProvider } from '@/contexts/navigationStateProvider'
 
 export default function MyApp({
   Component,
@@ -10,7 +11,9 @@ export default function MyApp({
   return (
     <div>
       <SessionProvider session={session}>
-        <Component {...pageProps} />
+        <NavigationStateProvider>
+          <Component {...pageProps} />
+        </NavigationStateProvider>
       </SessionProvider>
     </div>
   )
