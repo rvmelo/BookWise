@@ -57,5 +57,13 @@ export const SelectedBar = styled('div', {
 
   borderRadius: 999,
 
-  background: 'linear-gradient(90deg, #7FD1CC, #9694F5)',
+  background: 'transparent',
+
+  variants: {
+    isSelected: {
+      true: {
+        background: 'linear-gradient(90deg, #7FD1CC, #9694F5)',
+      },
+    },
+  },
 })

@@ -17,7 +17,7 @@ export const NavigationItem: React.FC<NavigationItemProps> = ({
 }) => {
   return (
     <NavigationItemContainer onClick={() => onClick()}>
-      {isSelected && <SelectedBar />}
+      <SelectedBar isSelected={isSelected} />
       <ItemContent isSelected={isSelected}>
         <Icon size={24} />
         <span>{title}</span>
