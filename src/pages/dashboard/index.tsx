@@ -81,43 +81,51 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return newBooksData
   })
 
-  const bookEvaluations = await prisma.book.findMany({
-    select: {
-      id: true,
-      name: true,
-      author: true,
-      cover_url: true,
-      ratings: {
-        select: {
-          id: true,
-          rate: true,
-        },
-      },
+  const booksWithAvg = await prisma.rating.groupBy({
+    by: ['book_id'],
+    _avg: {
+      rate: true,
     },
     orderBy: {
-      ratings: {
-        _count: 'desc',
+      _avg: {
+        rate: 'desc',
       },
     },
     take: 4,
   })
 
-  const formattedBookEvaluations = bookEvaluations.map((bookEvaluation) => {
-    const avgRate =
-      bookEvaluation.ratings.reduce((acc, rating) => acc + rating.rate, 0) /
-      bookEvaluation.ratings.length
+  const bookIds = booksWithAvg.map((book) => book.book_id)
+
+  const books = await prisma.book.findMany({
+    where: {
+      id: {
+        in: bookIds,
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      author: true,
+      cover_url: true,
+    },
+  })
+
+  const sortedBooks = booksWithAvg.map((bookWithAvg) => {
+    const book = books.find((bookItem) => bookItem.id === bookWithAvg.book_id)
 
     return {
-      ...bookEvaluation,
-      coverUrl: bookEvaluation.cover_url.slice(6) || '',
-      avgRate,
+      ...book,
+      coverUrl: book?.cover_url.slice(6) || '',
+      avgRate: booksWithAvg.find(
+        (bookWithAvg) => book?.id === bookWithAvg.book_id,
+      )?._avg.rate,
     }
   })
 
   return {
     props: {
       booksData: formattedBooksData,
-      bookEvaluationsData: formattedBookEvaluations,
+      bookEvaluationsData: sortedBooks,
     },
   }
 }
