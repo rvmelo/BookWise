@@ -13,7 +13,8 @@ export const InputContainer = styled('div', {
     color: '$gray500',
   },
 
-  maxWidth: '19rem',
+  maxWidth: '27rem',
+  width: '100%',
 
   input: {
     '::placeholder': {
