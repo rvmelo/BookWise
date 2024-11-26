@@ -1,7 +1,7 @@
 import { Input } from '@/components/input'
 import { Tag } from '@/components/tag'
 import { UserMenu } from '@/components/UserMenu'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import {
   BooksContainer,
   CategoriesContainer,
@@ -17,23 +17,30 @@ import { GetServerSideProps } from 'next'
 import { prisma } from '@/lib/prisma'
 import { BookEvaluationData } from '../home/_components/popularBooksSection'
 import { SmallCard } from '@/components/smallCard'
-
-enum BookCategory {
-  ALL = 'Todos',
-  COMPUTING = 'Programação',
-  EDUCATION = 'Educação',
-  FANTASY = 'Fábula',
-  SCI_FI = 'Ficção',
-  HORROR = 'Terror',
-  GEEK = 'Geek',
-  SUSPENSE = 'Suspense',
-}
+import { getBooksByCategory } from '@/services/getBooksByCategory'
+import { BookCategory } from '@/enums/bookCategory'
 
 export default function Explore({
   bookEvaluationsData,
 }: {
   bookEvaluationsData: BookEvaluationData[]
 }) {
+  const [books, setBooks] = useState<BookEvaluationData[]>(bookEvaluationsData)
+  const [selectedCategory, setSelectedCategory] = useState<BookCategory>(
+    BookCategory.ALL,
+  )
+
+  const handleBooksByCategory = useCallback(async (category: BookCategory) => {
+    setSelectedCategory(category)
+
+    const { bookEvaluationsData } =
+      (await getBooksByCategory({
+        category,
+      })) || {}
+
+    setBooks(bookEvaluationsData)
+  }, [])
+
   return (
     <ExploreContainer>
       <MenuSection>
@@ -50,11 +57,16 @@ export default function Explore({
           </ExploreSearchContainer>
           <CategoriesContainer>
             {Object.values(BookCategory).map((category) => (
-              <Tag name={category} key={category} />
+              <Tag
+                name={category}
+                key={category}
+                isSelected={category === selectedCategory}
+                onClick={() => handleBooksByCategory(category)}
+              />
             ))}
           </CategoriesContainer>
           <BooksContainer>
-            {bookEvaluationsData.map((bookEvaluation) => {
+            {books.map((bookEvaluation) => {
               return (
                 <SmallCard
                   key={bookEvaluation.id}
