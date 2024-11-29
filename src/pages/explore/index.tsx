@@ -23,7 +23,7 @@ import { GetServerSideProps } from 'next'
 import { prisma } from '@/lib/prisma'
 import { BookEvaluationData } from '../home/_components/popularBooksSection'
 import { SmallCard } from '@/components/smallCard'
-import { getBooksByCategory } from '@/services/getBooksByCategory'
+import { getBooksByCategoryOrAuthor } from '@/services/getBooksByCategoryOrAuthor'
 import { BookCategory } from '@/enums/bookCategory'
 import { useIsMounted } from '@/hooks/isMountedHook'
 
@@ -52,7 +52,7 @@ export default function Explore({
   const handleBooksByCategory = useCallback(
     async (category: BookCategory) => {
       const { bookEvaluationsData } =
-        (await getBooksByCategory({
+        (await getBooksByCategoryOrAuthor({
           category,
           searchText,
         })) || {}

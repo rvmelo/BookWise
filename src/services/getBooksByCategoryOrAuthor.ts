@@ -14,7 +14,7 @@ interface GetBooksByCategoryResponseDTO {
   bookEvaluationsData: BookEvaluationData[]
 }
 
-export const getBooksByCategory = async ({
+export const getBooksByCategoryOrAuthor = async ({
   category,
   searchText,
 }: GetBooksByCategoryRequestDTO) => {
