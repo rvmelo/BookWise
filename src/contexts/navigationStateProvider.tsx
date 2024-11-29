@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import React, { createContext, useContext, useMemo, useState } from 'react'
 
 export enum NavigationPages {
@@ -16,9 +17,21 @@ const NavigationContext = createContext({} as NavigationContextValue)
 export const NavigationStateProvider: React.FC<{
   children: React.ReactNode
 }> = ({ children }) => {
-  const [currentPage, setCurrentPage] = useState<NavigationPages>(
-    NavigationPages.HOME,
-  )
+  const router = useRouter()
+
+  const [currentPage, setCurrentPage] = useState<NavigationPages>(() => {
+    const currentPage = router.pathname
+
+    if (currentPage.includes(NavigationPages.EXPLORE)) {
+      return NavigationPages.EXPLORE
+    }
+
+    if (currentPage.includes(NavigationPages.PROFILE)) {
+      return NavigationPages.PROFILE
+    }
+
+    return NavigationPages.HOME
+  })
 
   const providerValues = useMemo(
     () => ({

@@ -7,6 +7,7 @@ type BookEvaluationData = Pick<Book, 'id' | 'name' | 'author'> & {
 
 interface GetBooksByCategoryRequestDTO {
   category: string
+  searchText?: string
 }
 
 interface GetBooksByCategoryResponseDTO {
@@ -15,9 +16,10 @@ interface GetBooksByCategoryResponseDTO {
 
 export const getBooksByCategory = async ({
   category,
+  searchText,
 }: GetBooksByCategoryRequestDTO) => {
   const { data } = await api.get<GetBooksByCategoryResponseDTO>(
-    `/explore/${category}`,
+    `/explore/${category}/${searchText}`,
   )
 
   return data

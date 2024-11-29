@@ -10,7 +10,10 @@ export default async function handler(
     return res.status(405).end()
   }
 
-  const category = String(req.query.category)
+  const { bookData } = req.query || {}
+
+  const category = bookData?.[0]
+  const searchText = bookData?.[1]
 
   if (!category) {
     return res.status(400).json({ error: 'Missing category' })
@@ -29,6 +32,20 @@ export default async function handler(
               },
             },
           },
+        }),
+        ...(searchText && {
+          OR: [
+            {
+              author: {
+                contains: searchText,
+              },
+            },
+            {
+              name: {
+                contains: searchText,
+              },
+            },
+          ],
         }),
       },
     },
@@ -58,6 +75,20 @@ export default async function handler(
             },
           },
         },
+      }),
+      ...(searchText && {
+        OR: [
+          {
+            author: {
+              contains: searchText,
+            },
+          },
+          {
+            name: {
+              contains: searchText,
+            },
+          },
+        ],
       }),
     },
     select: {

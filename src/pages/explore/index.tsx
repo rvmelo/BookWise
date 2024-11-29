@@ -1,7 +1,13 @@
 import { Input } from '@/components/input'
 import { Tag } from '@/components/tag'
 import { UserMenu } from '@/components/UserMenu'
-import React, { useCallback, useState } from 'react'
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import {
   BooksContainer,
   CategoriesContainer,
@@ -19,6 +25,7 @@ import { BookEvaluationData } from '../home/_components/popularBooksSection'
 import { SmallCard } from '@/components/smallCard'
 import { getBooksByCategory } from '@/services/getBooksByCategory'
 import { BookCategory } from '@/enums/bookCategory'
+import { useIsMounted } from '@/hooks/isMountedHook'
 
 export default function Explore({
   bookEvaluationsData,
@@ -30,16 +37,45 @@ export default function Explore({
     BookCategory.ALL,
   )
 
-  const handleBooksByCategory = useCallback(async (category: BookCategory) => {
-    setSelectedCategory(category)
+  const [searchText, setSearchText] = useState('')
 
-    const { bookEvaluationsData } =
-      (await getBooksByCategory({
-        category,
-      })) || {}
+  const isTyping = useRef(false)
 
-    setBooks(bookEvaluationsData)
-  }, [])
+  const { isCurrent } = useIsMounted()
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    isTyping.current = true
+    setSearchText(e.target.value)
+  }
+
+  const handleBooksByCategory = useCallback(
+    async (category: BookCategory) => {
+      const { bookEvaluationsData } =
+        (await getBooksByCategory({
+          category,
+          searchText,
+        })) || {}
+
+      isTyping.current = false
+
+      if (isCurrent()) {
+        setBooks(bookEvaluationsData)
+      }
+    },
+    [isCurrent, isTyping, searchText],
+  )
+
+  useEffect(() => {
+    const waitTime = isTyping.current ? 500 : 0
+    const timeOutId = setTimeout(() => {
+      handleBooksByCategory(selectedCategory)
+    }, waitTime)
+
+    return () => {
+      clearTimeout(timeOutId)
+    }
+  }, [handleBooksByCategory, isTyping, selectedCategory])
 
   return (
     <ExploreContainer>
@@ -53,7 +89,10 @@ export default function Explore({
               <ExploreIcon />
               <h2>Explorar</h2>
             </ExploreLabelContainer>
-            <Input placeholder="Buscar livro ou autor" />
+            <Input
+              placeholder="Buscar livro ou autor"
+              onChange={(e) => handleSearch(e)}
+            />
           </ExploreSearchContainer>
           <CategoriesContainer>
             {Object.values(BookCategory).map((category) => (
@@ -61,7 +100,7 @@ export default function Explore({
                 name={category}
                 key={category}
                 isSelected={category === selectedCategory}
-                onClick={() => handleBooksByCategory(category)}
+                onClick={() => setSelectedCategory(category)}
               />
             ))}
           </CategoriesContainer>
