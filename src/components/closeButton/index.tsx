@@ -4,11 +4,15 @@ import { CloseButtonContainer } from './styles'
 
 interface CloseButtonProps {
   onClick: () => void
+  position: 'topRight' | 'topLeft' | 'bottomRight' | 'bottomLeft'
 }
 
-export const CloseButton: React.FC<CloseButtonProps> = ({ onClick }) => {
+export const CloseButton: React.FC<CloseButtonProps> = ({
+  onClick,
+  position,
+}) => {
   return (
-    <CloseButtonContainer onClick={onClick}>
+    <CloseButtonContainer onClick={onClick} position={position}>
       <X size={24} />
     </CloseButtonContainer>
   )

@@ -14,6 +14,7 @@ interface SmallCardProps {
   name: string
   author: string
   coverUrl?: string
+  onClick?: () => void
 }
 
 export const SmallCard: React.FC<SmallCardProps> = ({
@@ -22,13 +23,14 @@ export const SmallCard: React.FC<SmallCardProps> = ({
   name,
   author,
   coverUrl,
+  onClick,
 }) => {
   const starsArray = Array.from({ length: rateLimit })
 
   const starsInfo = starsArray.map((_, i) => i <= rate - 1)
 
   return (
-    <SmallCardContainer>
+    <SmallCardContainer onClick={onClick}>
       {coverUrl && <Image src={coverUrl} width={64} height={94} alt="" />}
       <ContentContainer>
         <InfoCOntainer>

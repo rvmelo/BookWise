@@ -14,12 +14,13 @@ import { Binoculars, ChartLineUp, User } from '@phosphor-icons/react'
 import Image from 'next/image'
 
 import book from '../../../public/svg/book.svg'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import {
   NavigationPages,
   useStateNavigation,
 } from '@/contexts/navigationStateProvider'
 import { useRouter } from 'next/router'
+import { useModalProvider } from '@/contexts/modalProvider'
 
 export const UserMenu: React.FC = () => {
   const { data } = useSession()
@@ -34,6 +35,8 @@ export const UserMenu: React.FC = () => {
     setCurrentPage(page)
     router.push(page)
   }
+
+  const { onLoginModalCall } = useModalProvider()
 
   return (
     <UserMenuContainer>
@@ -80,7 +83,7 @@ export const UserMenu: React.FC = () => {
         </AuthButton>
       )}
       {!user?.name && (
-        <AuthButton onClick={() => signIn('google')}>
+        <AuthButton onClick={onLoginModalCall}>
           <span>Fazer login</span>
           <SignOutIcon isLoggedIn={false} />
         </AuthButton>
