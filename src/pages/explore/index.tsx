@@ -26,6 +26,7 @@ import { SmallCard } from '@/components/smallCard'
 import { getBooksByCategoryOrAuthor } from '@/services/getBooksByCategoryOrAuthor'
 import { BookCategory } from '@/enums/bookCategory'
 import { useIsMounted } from '@/hooks/isMountedHook'
+import { BookData, getBookById } from '@/services/getBookByIdService'
 
 export default function Explore({
   bookEvaluationsData,
@@ -36,6 +37,8 @@ export default function Explore({
   const [selectedCategory, setSelectedCategory] = useState<BookCategory>(
     BookCategory.ALL,
   )
+
+  const [selectedBook, setSelectedBook] = useState<BookData>()
 
   const [searchText, setSearchText] = useState('')
 
@@ -65,6 +68,12 @@ export default function Explore({
     },
     [isCurrent, isTyping, searchText],
   )
+
+  const handleBookClick = useCallback(async (id: string) => {
+    const { book } = (await getBookById({ id })) || {}
+
+    setSelectedBook(book)
+  }, [])
 
   useEffect(() => {
     const waitTime = isTyping.current ? 500 : 0
@@ -113,6 +122,7 @@ export default function Explore({
                   name={bookEvaluation.name}
                   author={bookEvaluation.author}
                   coverUrl={bookEvaluation.coverUrl}
+                  onClick={() => handleBookClick(bookEvaluation.id)}
                 />
               )
             })}
