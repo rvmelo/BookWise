@@ -3,7 +3,7 @@ import { styled } from '@/styles/stitches.config'
 export const CloseButtonContainer = styled('div', {
   padding: '0.5rem',
   borderRadius: '4px',
-  background: '$gray700',
+  background: 'transparent',
 
   maxWidth: '2.5rem',
 

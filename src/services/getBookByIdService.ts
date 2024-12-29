@@ -15,6 +15,8 @@ export type BookData = Pick<Book, 'id' | 'name' | 'author' | 'cover_url'> & {
       name: string
     }
   }[]
+} & {
+  avgRate: number
 }
 
 interface GetBooksByIdRequestDTO {

@@ -15,6 +15,21 @@ export default async function handler(
     return res.status(400).json({ error: 'Missing id' })
   }
 
+  const bookWithAvg = await prisma.rating.groupBy({
+    where: {
+      book_id: String(id),
+    },
+    by: ['book_id'],
+    _avg: {
+      rate: true,
+    },
+    orderBy: {
+      _avg: {
+        rate: 'desc',
+      },
+    },
+  })
+
   const book = await prisma.book.findUnique({
     where: {
       id: String(id),
@@ -46,5 +61,11 @@ export default async function handler(
     },
   })
 
-  return res.json({ book })
+  return res.json({
+    book: {
+      ...book,
+      avgRate: bookWithAvg[0]._avg.rate,
+      cover_url: book?.cover_url.slice(6) || '',
+    },
+  })
 }

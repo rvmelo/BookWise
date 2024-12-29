@@ -26,6 +26,7 @@ import { SmallCard } from '@/components/smallCard'
 import { getBooksByCategoryOrAuthor } from '@/services/getBooksByCategoryOrAuthor'
 import { BookCategory } from '@/enums/bookCategory'
 import { useIsMounted } from '@/hooks/isMountedHook'
+import { BookModal } from './_components/bookModal'
 import { BookData, getBookById } from '@/services/getBookByIdService'
 
 export default function Explore({
@@ -87,49 +88,59 @@ export default function Explore({
   }, [handleBooksByCategory, isTyping, selectedCategory])
 
   return (
-    <ExploreContainer>
-      <MenuSection>
-        <UserMenu />
-      </MenuSection>
-      <ExploreSection>
-        <ExploreContent>
-          <ExploreSearchContainer>
-            <ExploreLabelContainer>
-              <ExploreIcon />
-              <h2>Explorar</h2>
-            </ExploreLabelContainer>
-            <Input
-              placeholder="Buscar livro ou autor"
-              onChange={(e) => handleSearch(e)}
-            />
-          </ExploreSearchContainer>
-          <CategoriesContainer>
-            {Object.values(BookCategory).map((category) => (
-              <Tag
-                name={category}
-                key={category}
-                isSelected={category === selectedCategory}
-                onClick={() => setSelectedCategory(category)}
+    <>
+      {selectedBook && (
+        <BookModal
+          visible={!!selectedBook}
+          rate={selectedBook.avgRate}
+          book={selectedBook}
+          handleModalClose={() => setSelectedBook(undefined)}
+        />
+      )}
+      <ExploreContainer>
+        <MenuSection>
+          <UserMenu />
+        </MenuSection>
+        <ExploreSection>
+          <ExploreContent>
+            <ExploreSearchContainer>
+              <ExploreLabelContainer>
+                <ExploreIcon />
+                <h2>Explorar</h2>
+              </ExploreLabelContainer>
+              <Input
+                placeholder="Buscar livro ou autor"
+                onChange={(e) => handleSearch(e)}
               />
-            ))}
-          </CategoriesContainer>
-          <BooksContainer>
-            {books.map((bookEvaluation) => {
-              return (
-                <SmallCard
-                  key={bookEvaluation.id}
-                  rate={bookEvaluation.avgRate}
-                  name={bookEvaluation.name}
-                  author={bookEvaluation.author}
-                  coverUrl={bookEvaluation.coverUrl}
-                  onClick={() => handleBookClick(bookEvaluation.id)}
+            </ExploreSearchContainer>
+            <CategoriesContainer>
+              {Object.values(BookCategory).map((category) => (
+                <Tag
+                  name={category}
+                  key={category}
+                  isSelected={category === selectedCategory}
+                  onClick={() => setSelectedCategory(category)}
                 />
-              )
-            })}
-          </BooksContainer>
-        </ExploreContent>
-      </ExploreSection>
-    </ExploreContainer>
+              ))}
+            </CategoriesContainer>
+            <BooksContainer>
+              {books.map((bookEvaluation) => {
+                return (
+                  <SmallCard
+                    key={bookEvaluation.id}
+                    rate={bookEvaluation.avgRate}
+                    name={bookEvaluation.name}
+                    author={bookEvaluation.author}
+                    coverUrl={bookEvaluation.coverUrl}
+                    onClick={() => handleBookClick(bookEvaluation.id)}
+                  />
+                )
+              })}
+            </BooksContainer>
+          </ExploreContent>
+        </ExploreSection>
+      </ExploreContainer>
+    </>
   )
 }
 
@@ -159,6 +170,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
       name: true,
       author: true,
       cover_url: true,
+      categories: true,
+      ratings: {
+        select: {
+          id: true,
+          rate: true,
+        },
+      },
     },
   })
 
