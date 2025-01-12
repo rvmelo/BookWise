@@ -27,6 +27,7 @@ export const BackDrop = styled('main', {
 export const ModalBookContainer = styled('div', {
   background: '$gray800',
   padding: '4rem 3rem',
+  overflowY: 'auto',
 })
 
 export const BookWrapper = styled('div', {
@@ -40,6 +41,7 @@ export const BookWrapper = styled('div', {
   padding: '$6 $8 $4',
 
   minWidth: '35.25rem',
+  maxWidth: '35.25rem',
 })
 
 export const BookDataContainer = styled('div', {
@@ -137,4 +139,38 @@ export const TextInfoContainer = styled('div', {
 
 export const BookIcon = styled(BookOpen, {
   color: '$green100',
+})
+
+export const EvaluationHeader = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+
+  marginTop: '2.875rem',
+  marginBottom: '1.375rem',
+
+  '> span': {
+    fontWeight: '$regular',
+    fontSize: '$sm',
+    color: '$gray200',
+  },
+})
+
+export const EvaluationButton = styled('button', {
+  background: 'transparent',
+  border: 'none',
+  cursor: 'pointer',
+
+  span: {
+    fontWeight: '$bold',
+    fontSize: '$md',
+    color: '$purple100',
+  },
+})
+
+export const CommentsWrapper = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '$3',
 })

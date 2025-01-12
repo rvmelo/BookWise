@@ -1,6 +1,8 @@
 import React from 'react'
 import { CloseButton } from '@/components/closeButton'
 import Image from 'next/image'
+import { Comment } from '../comment'
+
 import {
   BackDrop,
   BookBottomContainer,
@@ -9,6 +11,9 @@ import {
   BookInfoWrapper,
   BookWrapper,
   BottomInfoContainer,
+  CommentsWrapper,
+  EvaluationButton,
+  EvaluationHeader,
   InfoContainer,
   ModalBookContainer,
   SaveIcon,
@@ -92,6 +97,26 @@ export const BookModal: React.FC<BookModalProps> = ({
             </InfoContainer>
           </BookBottomContainer>
         </BookWrapper>
+        <EvaluationHeader>
+          <span>Avaliações</span>
+          <EvaluationButton>
+            <span>Avaliar</span>
+          </EvaluationButton>
+        </EvaluationHeader>
+        <CommentsWrapper>
+          {book.ratings.map((rating) => {
+            return (
+              <Comment
+                key={rating.id}
+                userName={rating?.user?.name}
+                userAvatarUrl={rating.user?.avatar_url || ''}
+                description={rating.description}
+                createdAt={rating.created_at}
+                rate={rating.rate}
+              />
+            )
+          })}
+        </CommentsWrapper>
       </ModalBookContainer>
     </BackDrop>
   )
