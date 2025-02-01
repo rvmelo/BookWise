@@ -23,6 +23,8 @@ import {
   TopInfoContainer,
 } from './styles'
 import { BookData } from '@/services/getBookByIdService'
+import { useSession } from 'next-auth/react'
+import { useModalProvider } from '@/contexts/modalProvider'
 
 interface BookModalProps {
   visible: boolean
@@ -40,6 +42,15 @@ export const BookModal: React.FC<BookModalProps> = ({
   const starsArray = Array.from({ length: 5 })
 
   const starsInfo = starsArray.map((_, i) => i <= rate - 1)
+
+  const session = useSession()
+  const isSignedIn = session.status === 'authenticated'
+
+  const { onLoginModalCall } = useModalProvider()
+
+  const handleAddComment = () => {
+    console.log('Adding comment')
+  }
 
   return (
     <BackDrop visible={visible}>
@@ -99,7 +110,9 @@ export const BookModal: React.FC<BookModalProps> = ({
         </BookWrapper>
         <EvaluationHeader>
           <span>Avaliações</span>
-          <EvaluationButton>
+          <EvaluationButton
+            onClick={isSignedIn ? handleAddComment : onLoginModalCall}
+          >
             <span>Avaliar</span>
           </EvaluationButton>
         </EvaluationHeader>

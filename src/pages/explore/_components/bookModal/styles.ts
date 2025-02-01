@@ -8,7 +8,7 @@ export const BackDrop = styled('main', {
   background: 'rgba(0, 0, 0, 0.60)',
   width: '100vw',
   height: '100vh',
-  zIndex: 999,
+  zIndex: 600,
 
   display: 'flex',
   flexDirection: 'column',
