@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CloseButton } from '@/components/closeButton'
 import Image from 'next/image'
 import { Comment } from '../comment'
@@ -25,6 +25,7 @@ import {
 import { BookData } from '@/services/getBookByIdService'
 import { useSession } from 'next-auth/react'
 import { useModalProvider } from '@/contexts/modalProvider'
+import { EvaluationUI } from '../evaluationUI'
 
 interface BookModalProps {
   visible: boolean
@@ -46,11 +47,24 @@ export const BookModal: React.FC<BookModalProps> = ({
   const session = useSession()
   const isSignedIn = session.status === 'authenticated'
 
+  // const { data: { user } = {} } = session ?? {}
+
+  const { data } = session || {}
+
+  const { user } = data || {}
+
   const { onLoginModalCall } = useModalProvider()
+
+  const [isStartEvaluation, setIsStartEvaluation] = useState(false)
 
   const handleAddComment = () => {
     console.log('Adding comment')
+    setIsStartEvaluation(true)
   }
+
+  const shouldDisplayEvaluationUI = isSignedIn && isStartEvaluation
+
+  const handleCloseEvaluationUI = () => setIsStartEvaluation(false)
 
   return (
     <BackDrop visible={visible}>
@@ -116,6 +130,13 @@ export const BookModal: React.FC<BookModalProps> = ({
             <span>Avaliar</span>
           </EvaluationButton>
         </EvaluationHeader>
+        {shouldDisplayEvaluationUI && (
+          <EvaluationUI
+            userName={user?.name || ''}
+            userAvatarUrl={user?.image || ''}
+            onCancel={handleCloseEvaluationUI}
+          />
+        )}
         <CommentsWrapper>
           {book.ratings.map((rating) => {
             return (

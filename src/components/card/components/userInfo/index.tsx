@@ -12,7 +12,7 @@ import { formatTimeUntilNow } from '@/utils/formatTimeUntilNow'
 interface AuthenticatedInfoProps {
   userName?: string
   userAvatarUrl?: string
-  createdAt: string | Date
+  createdAt?: string | Date
 }
 
 export const UserInfo: React.FC<AuthenticatedInfoProps> = ({
@@ -33,7 +33,7 @@ export const UserInfo: React.FC<AuthenticatedInfoProps> = ({
       )}
       <UserInfoContainer>
         <h2>{userName}</h2>
-        <span>{formatTimeUntilNow(createdAt)}</span>
+        {createdAt && <span>{formatTimeUntilNow(createdAt)}</span>}
       </UserInfoContainer>
     </UserDataContainer>
   )

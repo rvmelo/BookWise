@@ -9,7 +9,7 @@ export const UserDataContainer = styled('div', {
 export const UserInfoContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'flex-start',
+  justifyContent: 'center',
   gap: '4px',
 
   span: {
