@@ -134,7 +134,7 @@ export const BookModal: React.FC<BookModalProps> = ({
           <EvaluationUI
             userName={user?.name || ''}
             userAvatarUrl={user?.image || ''}
-            onCancel={handleCloseEvaluationUI}
+            handleFinishEvaluation={handleCloseEvaluationUI}
           />
         )}
         <CommentsWrapper>

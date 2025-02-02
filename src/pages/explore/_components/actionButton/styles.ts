@@ -1,6 +1,6 @@
 import { styled } from '@/styles/stitches.config'
 
-export const ActionButtonContainer = styled('div', {
+export const ActionButtonContainer = styled('button', {
   padding: '0.5rem',
   borderRadius: '4px',
   background: '$gray600',

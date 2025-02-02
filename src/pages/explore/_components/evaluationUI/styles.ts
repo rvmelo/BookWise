@@ -43,3 +43,7 @@ export const ActionButtonsContainer = styled('div', {
   flexDirection: 'row',
   gap: '$2',
 })
+
+export const Form = styled('form', {
+  width: '100%',
+})
