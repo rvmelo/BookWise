@@ -13,10 +13,14 @@ import { ActionButton } from '../actionButton'
 import { z } from 'zod'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { createUserRating } from '@/services/createUserRatingService'
+import { AxiosError } from 'axios'
 
 interface CommentInputProps {
   userName: string
+  userId: string
   userAvatarUrl?: string
+  bookId: string
   rateLimit?: number
   handleFinishEvaluation: () => void
 }
@@ -34,6 +38,8 @@ type EvaluationFormData = z.infer<typeof evaluationSchema>
 
 export const EvaluationUI: React.FC<CommentInputProps> = ({
   userName,
+  userId,
+  bookId,
   handleFinishEvaluation,
   userAvatarUrl,
   rateLimit = 5,
@@ -64,8 +70,16 @@ export const EvaluationUI: React.FC<CommentInputProps> = ({
   }
 
   async function handleEvaluation(data: EvaluationFormData) {
-    console.log(data)
-    handleFinishEvaluation()
+    try {
+      const { rate, description } = data || {}
+
+      handleFinishEvaluation()
+      await createUserRating({ rate, description, bookId, id: userId })
+    } catch (err) {
+      if (err instanceof AxiosError && err?.response?.data?.message) {
+        alert(err.response.data.message)
+      }
+    }
   }
 
   return (

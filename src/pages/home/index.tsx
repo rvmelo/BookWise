@@ -1,5 +1,3 @@
-import { useSession } from 'next-auth/react'
-import { useEffect } from 'react'
 import { DashboardContainer, FeedGird, MenuGrid, PopularGrid } from './styles'
 import { UserMenu } from '@/components/UserMenu'
 import { BookData, FeedSection } from './_components/feedSection'
@@ -17,12 +15,6 @@ export default function Home({
   booksData: BookData[]
   bookEvaluationsData: BookEvaluationData[]
 }) {
-  const session = useSession()
-
-  useEffect(() => {
-    console.log(session)
-  }, [session])
-
   return (
     <DashboardContainer>
       <MenuGrid>

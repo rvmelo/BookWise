@@ -45,6 +45,7 @@ export const BookModal: React.FC<BookModalProps> = ({
   const starsInfo = starsArray.map((_, i) => i <= rate - 1)
 
   const session = useSession()
+
   const isSignedIn = session.status === 'authenticated'
 
   // const { data: { user } = {} } = session ?? {}
@@ -58,7 +59,6 @@ export const BookModal: React.FC<BookModalProps> = ({
   const [isStartEvaluation, setIsStartEvaluation] = useState(false)
 
   const handleAddComment = () => {
-    console.log('Adding comment')
     setIsStartEvaluation(true)
   }
 
@@ -133,6 +133,8 @@ export const BookModal: React.FC<BookModalProps> = ({
         {shouldDisplayEvaluationUI && (
           <EvaluationUI
             userName={user?.name || ''}
+            userId={user?.id || ''}
+            bookId={book.id}
             userAvatarUrl={user?.image || ''}
             handleFinishEvaluation={handleCloseEvaluationUI}
           />
