@@ -1,5 +1,12 @@
 import { useRouter } from 'next/router'
-import React, { createContext, useContext, useMemo, useState } from 'react'
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 
 export enum NavigationPages {
   HOME = 'home',
@@ -19,19 +26,25 @@ export const NavigationStateProvider: React.FC<{
 }> = ({ children }) => {
   const router = useRouter()
 
-  const [currentPage, setCurrentPage] = useState<NavigationPages>(() => {
-    const currentPage = router.pathname
-
-    if (currentPage.includes(NavigationPages.EXPLORE)) {
+  const onRouteChange = useCallback(() => {
+    if (router.pathname.includes(NavigationPages.EXPLORE)) {
       return NavigationPages.EXPLORE
     }
 
-    if (currentPage.includes(NavigationPages.PROFILE)) {
+    if (router.pathname.includes(NavigationPages.PROFILE)) {
       return NavigationPages.PROFILE
     }
 
     return NavigationPages.HOME
-  })
+  }, [router.pathname])
+
+  const [currentPage, setCurrentPage] = useState<NavigationPages>(onRouteChange)
+
+  useEffect(() => {
+    const current = onRouteChange()
+
+    setCurrentPage(current)
+  }, [onRouteChange])
 
   const providerValues = useMemo(
     () => ({
