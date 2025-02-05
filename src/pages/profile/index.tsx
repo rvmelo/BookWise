@@ -1,9 +1,13 @@
 import React from 'react'
+import { MenuGrid, ProfileContainer } from './styles'
+import { UserMenu } from '@/components/UserMenu'
 
 export default function Profile() {
   return (
-    <div>
-      <h1>Profile</h1>
-    </div>
+    <ProfileContainer>
+      <MenuGrid>
+        <UserMenu />
+      </MenuGrid>
+    </ProfileContainer>
   )
 }
