@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       user: {
         name: foundUser?.name,
         avatar_url: foundUser?.avatar_url,
-        created_at: foundUser?.created_at,
+        created_at: foundUser?.created_at.toISOString(),
       },
       ratings: foundUser?.ratings,
     },
