@@ -27,4 +27,6 @@ export const RatingsContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '$6',
+  marginTop: '$8',
+  paddingBottom: '5.25rem',
 })

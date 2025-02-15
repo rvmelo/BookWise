@@ -10,18 +10,18 @@ import { User } from '@prisma/client'
 import { RatingData } from './_components/profileFeedCard'
 
 interface EvaluationData {
-  user: Pick<User, 'name' | 'avatar_url' | 'created_at'>
+  user: Pick<User, 'id' | 'name' | 'avatar_url' | 'created_at'>
   ratings: RatingData[]
 }
 
-export default function Profile({ ratings }: EvaluationData) {
+export default function Profile({ ratings, user }: EvaluationData) {
   return (
     <ProfileContainer>
       <MenuGrid>
         <UserMenu />
       </MenuGrid>
       <FeedGird>
-        <ProfileFeedSection ratings={ratings} />
+        <ProfileFeedSection ratings={ratings} userId={user.id} />
       </FeedGird>
     </ProfileContainer>
   )
@@ -37,6 +37,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       id: user?.id,
     },
     select: {
+      id: true,
       name: true,
       avatar_url: true,
       created_at: true,
@@ -50,10 +51,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
             select: {
               name: true,
               author: true,
-              summary: true,
               cover_url: true,
             },
           },
+        },
+        orderBy: {
+          created_at: 'desc',
         },
       },
     },
@@ -72,6 +75,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   return {
     props: {
       user: {
+        id: user?.id,
         name: foundUser?.name,
         avatar_url: foundUser?.avatar_url,
         created_at: foundUser?.created_at.toISOString(),

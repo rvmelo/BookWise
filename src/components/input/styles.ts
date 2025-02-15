@@ -13,9 +13,6 @@ export const InputContainer = styled('div', {
     color: '$gray500',
   },
 
-  maxWidth: '27rem',
-  width: '100%',
-
   input: {
     '::placeholder': {
       color: '$gray400',
@@ -41,6 +38,15 @@ export const InputContainer = styled('div', {
         svg: {
           color: '$green200',
         },
+      },
+    },
+    isUnlimitedWidth: {
+      true: {
+        width: '100%',
+      },
+      false: {
+        maxWidth: '27rem',
+        width: '100%',
       },
     },
   },
