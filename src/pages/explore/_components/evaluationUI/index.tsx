@@ -2,6 +2,7 @@ import { UserInfo } from '@/components/card/components/userInfo'
 import React, { useState } from 'react'
 import {
   ActionButtonsContainer,
+  ErrorContainer,
   EvaluationUIWrapper,
   Form,
   Header,
@@ -47,7 +48,7 @@ export const EvaluationUI: React.FC<CommentInputProps> = ({
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<EvaluationFormData>({
     resolver: zodResolver(evaluationSchema),
   })
@@ -138,6 +139,12 @@ export const EvaluationUI: React.FC<CommentInputProps> = ({
             )
           }}
         />
+
+        {(errors.description || errors.rate) && (
+          <ErrorContainer>
+            <span>A nota e o comentário são obrigatórios na avaliação</span>
+          </ErrorContainer>
+        )}
 
         <ActionButtonsContainer>
           <ActionButton actionType="deny" onClick={handleFinishEvaluation} />

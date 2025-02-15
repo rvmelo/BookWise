@@ -2,8 +2,8 @@ import React from 'react'
 import { FeedGird, MenuGrid, ProfileContainer } from './styles'
 import { UserMenu } from '@/components/UserMenu'
 import { GetServerSideProps } from 'next'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '../api/auth/[...nextauth]'
+// import { getServerSession } from 'next-auth'
+// import { authOptions } from '../api/auth/[...nextauth]'
 import { prisma } from '@/lib/prisma'
 import { ProfileFeedSection } from './_components/profileFeedSection'
 import { User } from '@prisma/client'
@@ -27,14 +27,16 @@ export default function Profile({ ratings, user }: EvaluationData) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await getServerSession(req, res, authOptions)
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { id } = params || {}
 
-  const { user } = session || {}
+  // const session = await getServerSession(req, res, authOptions)
+
+  // const { user } = session || {}
 
   const foundUser = await prisma.user.findUnique({
     where: {
-      id: user?.id,
+      id: String(id),
     },
     select: {
       id: true,
@@ -75,7 +77,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   return {
     props: {
       user: {
-        id: user?.id,
+        id: String(id),
         name: foundUser?.name,
         avatar_url: foundUser?.avatar_url,
         created_at: foundUser?.created_at.toISOString(),

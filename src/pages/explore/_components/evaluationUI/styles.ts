@@ -47,3 +47,17 @@ export const ActionButtonsContainer = styled('div', {
 export const Form = styled('form', {
   width: '100%',
 })
+
+export const ErrorContainer = styled('div', {
+  width: '100%',
+
+  display: 'flex',
+
+  justifyContent: 'flex-end',
+
+  span: {
+    fontWeight: '$regular',
+    fontSize: '$xs',
+    color: '$error',
+  },
+})

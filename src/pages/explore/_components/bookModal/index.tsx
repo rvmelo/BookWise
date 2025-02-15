@@ -146,6 +146,7 @@ export const BookModal: React.FC<BookModalProps> = ({
                 key={rating.id}
                 userName={rating?.user?.name}
                 userAvatarUrl={rating.user?.avatar_url || ''}
+                userId={rating?.user?.id}
                 description={rating.description}
                 createdAt={rating.created_at}
                 rate={rating.rate}

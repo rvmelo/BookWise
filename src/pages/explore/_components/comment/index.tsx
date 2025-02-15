@@ -1,11 +1,19 @@
 import { UserInfo } from '@/components/card/components/userInfo'
 import React from 'react'
-import { CommentContainer, Header, StarsContainer, StyledStar } from './styles'
+import {
+  CommentContainer,
+  Header,
+  StarsContainer,
+  StyledStar,
+  UserInfoWrapper,
+} from './styles'
+import { useRouter } from 'next/router'
 
 interface CommentProps {
   userName: string
   createdAt: Date
   userAvatarUrl?: string
+  userId: string
   rateLimit?: number
   description: string
   rate: number
@@ -13,6 +21,7 @@ interface CommentProps {
 
 export const Comment: React.FC<CommentProps> = ({
   userName,
+  userId,
   createdAt,
   userAvatarUrl,
   description,
@@ -23,14 +32,19 @@ export const Comment: React.FC<CommentProps> = ({
 
   const starsInfo = starsArray.map((_, i) => i <= rate - 1)
 
+  const router = useRouter()
+
   return (
     <CommentContainer>
       <Header>
-        <UserInfo
-          userName={userName}
-          createdAt={createdAt}
-          userAvatarUrl={userAvatarUrl}
-        />
+        <UserInfoWrapper onClick={() => router.push(`/profile/${userId}`)}>
+          <UserInfo
+            userName={userName}
+            createdAt={createdAt}
+            userAvatarUrl={userAvatarUrl}
+          />
+        </UserInfoWrapper>
+
         <StarsContainer>
           {starsInfo.map((star, i) =>
             star ? (

@@ -33,7 +33,12 @@ export const UserMenu: React.FC = () => {
 
   const handleNavigation = (page: NavigationPages) => {
     setCurrentPage(page)
-    router.push(page)
+
+    const formattedUrl = page.includes(NavigationPages.PROFILE)
+      ? `/${page}/${user?.id}`
+      : `/${page}`
+
+    router.push(formattedUrl)
   }
 
   const { onLoginModalCall } = useModalProvider()
@@ -50,20 +55,20 @@ export const UserMenu: React.FC = () => {
             title="Início"
             Icon={ChartLineUp}
             onClick={() => handleNavigation(NavigationPages.HOME)}
-            isSelected={currentPage === NavigationPages.HOME}
+            isSelected={currentPage.includes(NavigationPages.HOME)}
           />
           <NavigationItem
             title="Explorar"
             Icon={Binoculars}
             onClick={() => handleNavigation(NavigationPages.EXPLORE)}
-            isSelected={currentPage === NavigationPages.EXPLORE}
+            isSelected={currentPage.includes(NavigationPages.EXPLORE)}
           />
           {user?.name && (
             <NavigationItem
               title="Perfil"
               Icon={User}
               onClick={() => handleNavigation(NavigationPages.PROFILE)}
-              isSelected={currentPage === NavigationPages.PROFILE}
+              isSelected={currentPage.includes(NavigationPages.PROFILE)}
             />
           )}
         </NavigationMenuContainer>

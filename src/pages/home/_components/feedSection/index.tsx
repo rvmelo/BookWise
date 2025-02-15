@@ -15,7 +15,7 @@ import { Book, User } from '@prisma/client'
 
 export interface BookData {
   book: Omit<Book, 'cover_url'> & { coverUrl: string }
-  user: Pick<User, 'name'> & { avatarUrl: string }
+  user: Pick<User, 'name' | 'id'> & { avatarUrl: string }
   created_at: string
   rate: number
   id: string
@@ -51,6 +51,7 @@ export const FeedSection: React.FC<{
       </LastReadingContainer>
       <RecentEvaluationContainer>
         <span>Avaliações mais recentes</span>
+
         <EvaluationContainer>
           {booksData.map((bookData) => {
             const { book } = bookData || {}

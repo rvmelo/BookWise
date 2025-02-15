@@ -15,8 +15,8 @@ export enum NavigationPages {
 }
 
 interface NavigationContextValue {
-  currentPage: NavigationPages
-  setCurrentPage: (page: NavigationPages) => void
+  currentPage: string
+  setCurrentPage: (page: string) => void
 }
 
 const NavigationContext = createContext({} as NavigationContextValue)
@@ -28,17 +28,17 @@ export const NavigationStateProvider: React.FC<{
 
   const onRouteChange = useCallback(() => {
     if (router.pathname.includes(NavigationPages.EXPLORE)) {
-      return NavigationPages.EXPLORE
+      return `/${NavigationPages.EXPLORE}`
     }
 
     if (router.pathname.includes(NavigationPages.PROFILE)) {
-      return NavigationPages.PROFILE
+      return `/${NavigationPages.PROFILE}`
     }
 
-    return NavigationPages.HOME
+    return `/${NavigationPages.HOME}`
   }, [router.pathname])
 
-  const [currentPage, setCurrentPage] = useState<NavigationPages>(onRouteChange)
+  const [currentPage, setCurrentPage] = useState<string>(onRouteChange)
 
   useEffect(() => {
     const current = onRouteChange()

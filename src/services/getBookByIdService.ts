@@ -1,7 +1,7 @@
 import { api } from '@/lib/axios'
 import { Book, Rating, User } from '@prisma/client'
 
-type UserType = Pick<User, 'avatar_url' | 'name'>
+type UserType = Pick<User, 'avatar_url' | 'name' | 'id'>
 
 export type BookData = Pick<Book, 'id' | 'name' | 'author' | 'cover_url'> & {
   ratings: (Pick<Rating, 'id' | 'rate' | 'created_at' | 'description'> & {

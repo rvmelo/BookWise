@@ -13,6 +13,7 @@ import {
 import { UserInfo } from './components/userInfo'
 import { formatTimeUntilNow } from '@/utils/formatTimeUntilNow'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 type BookData = {
   name: string
@@ -22,6 +23,7 @@ type BookData = {
 }
 
 type UserData = {
+  id: string
   name: string
   avatarUrl?: string
 }
@@ -47,8 +49,13 @@ export const Card: React.FC<CardProps> = ({
 
   const shouldDisplayHeader = !!user
 
+  const router = useRouter()
+
   return (
-    <CardContainer shouldDisplayHeader={shouldDisplayHeader}>
+    <CardContainer
+      shouldDisplayHeader={shouldDisplayHeader}
+      onClick={() => router.push(`/profile/${user?.id}`)}
+    >
       {shouldDisplayHeader && (
         <Header>
           <UserInfo
@@ -56,6 +63,7 @@ export const Card: React.FC<CardProps> = ({
             userAvatarUrl={user.avatarUrl}
             createdAt={createdAt}
           />
+
           <StarsContainer>
             {starsInfo.map((star, i) =>
               star ? (

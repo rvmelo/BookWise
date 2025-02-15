@@ -34,3 +34,7 @@ export const Header = styled('div', {
   flexDirection: 'row',
   justifyContent: 'space-between',
 })
+
+export const UserInfoWrapper = styled('div', {
+  cursor: 'pointer',
+})
