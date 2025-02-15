@@ -9,3 +9,8 @@ export const ProfileContainer = styled('section', {
 export const MenuGrid = styled('section', {
   padding: '1.25rem 0 1.25rem 1.25rem',
 })
+
+export const FeedGird = styled('section', {
+  width: '100%',
+  padding: '4.5rem 4rem 0 6rem',
+})
