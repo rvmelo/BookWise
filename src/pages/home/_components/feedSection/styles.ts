@@ -1,7 +1,9 @@
 import { styled } from '@/styles/stitches.config'
 import { CaretRight, ChartLineUp } from '@phosphor-icons/react'
 
-export const FeedSectionContainer = styled('div', {})
+export const FeedSectionContainer = styled('div', {
+  paddingBottom: '$10',
+})
 
 export const TitleContainer = styled('div', {
   display: 'flex',
