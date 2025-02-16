@@ -28,9 +28,7 @@ CREATE TABLE "CategoriesOnBooks" (
     "book_id" TEXT NOT NULL,
     "categoryId" TEXT NOT NULL,
 
-    PRIMARY KEY ("book_id", "categoryId"),
-    CONSTRAINT "CategoriesOnBooks_book_id_fkey" FOREIGN KEY ("book_id") REFERENCES "books" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "CategoriesOnBooks_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "categories" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    PRIMARY KEY ("book_id", "categoryId")
 );
 
 -- CreateTable
@@ -40,9 +38,7 @@ CREATE TABLE "ratings" (
     "description" TEXT NOT NULL,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "book_id" TEXT NOT NULL,
-    "user_id" TEXT NOT NULL,
-    CONSTRAINT "ratings_book_id_fkey" FOREIGN KEY ("book_id") REFERENCES "books" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "ratings_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "user_id" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -58,8 +54,7 @@ CREATE TABLE "accounts" (
     "token_type" TEXT,
     "scope" TEXT,
     "id_token" TEXT,
-    "session_state" TEXT,
-    CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+    "session_state" TEXT
 );
 
 -- CreateTable
@@ -67,8 +62,7 @@ CREATE TABLE "sessions" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "session_token" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
-    "expires" DATETIME NOT NULL,
-    CONSTRAINT "sessions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+    "expires" DATETIME NOT NULL
 );
 
 -- CreateIndex
