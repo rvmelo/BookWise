@@ -1,5 +1,5 @@
 import React from 'react'
-import { FeedGird, MenuGrid, ProfileContainer } from './styles'
+import { FeedGird, MenuGrid, ProfileContainer, UserInfoGrid } from './styles'
 import { UserMenu } from '@/components/UserMenu'
 import { GetServerSideProps } from 'next'
 // import { getServerSession } from 'next-auth'
@@ -8,6 +8,7 @@ import { prisma } from '@/lib/prisma'
 import { ProfileFeedSection } from './_components/profileFeedSection'
 import { User } from '@prisma/client'
 import { RatingData } from './_components/profileFeedCard'
+import { UserInfoSection } from './_components/userInfoSection'
 
 interface EvaluationData {
   user: Pick<User, 'id' | 'name' | 'avatar_url' | 'created_at'>
@@ -23,6 +24,9 @@ export default function Profile({ ratings, user }: EvaluationData) {
       <FeedGird>
         <ProfileFeedSection ratings={ratings} userId={user.id} />
       </FeedGird>
+      <UserInfoGrid>
+        <UserInfoSection user={user} ratingsAmount={ratings.length} />
+      </UserInfoGrid>
     </ProfileContainer>
   )
 }

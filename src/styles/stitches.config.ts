@@ -3,7 +3,7 @@
 import { nunito } from '@/utils/fonts'
 import { createStitches } from '@stitches/react'
 
-export const { styled, getCssText, globalCss } = createStitches({
+export const { styled, getCssText, globalCss, theme } = createStitches({
   theme: {
     fonts: {
       default: `${nunito.style.fontFamily}, sans-serif`,

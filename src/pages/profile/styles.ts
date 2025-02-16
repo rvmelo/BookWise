@@ -14,3 +14,7 @@ export const FeedGird = styled('section', {
   width: '100%',
   padding: '4.5rem 4rem 0 6rem',
 })
+
+export const UserInfoGrid = styled('section', {
+  paddingTop: '9.125rem',
+})
