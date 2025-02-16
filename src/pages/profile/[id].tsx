@@ -2,8 +2,8 @@ import React from 'react'
 import { FeedGird, MenuGrid, ProfileContainer, UserInfoGrid } from './styles'
 import { UserMenu } from '@/components/UserMenu'
 import { GetServerSideProps } from 'next'
-// import { getServerSession } from 'next-auth'
-// import { authOptions } from '../api/auth/[...nextauth]'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]'
 import { prisma } from '@/lib/prisma'
 import { ProfileFeedSection } from './_components/profileFeedSection'
 import { User } from '@prisma/client'
@@ -13,16 +13,21 @@ import { UserInfoSection } from './_components/userInfoSection'
 interface EvaluationData {
   user: Pick<User, 'id' | 'name' | 'avatar_url' | 'created_at'>
   ratings: RatingData[]
+  isMyPage: boolean
 }
 
-export default function Profile({ ratings, user }: EvaluationData) {
+export default function Profile({ ratings, user, isMyPage }: EvaluationData) {
   return (
     <ProfileContainer>
       <MenuGrid>
         <UserMenu />
       </MenuGrid>
       <FeedGird>
-        <ProfileFeedSection ratings={ratings} userId={user.id} />
+        <ProfileFeedSection
+          ratings={ratings}
+          userId={user.id}
+          isMyPage={isMyPage}
+        />
       </FeedGird>
       <UserInfoGrid>
         <UserInfoSection user={user} ratingsAmount={ratings.length} />
@@ -31,12 +36,18 @@ export default function Profile({ ratings, user }: EvaluationData) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  params,
+}) => {
   const { id } = params || {}
 
-  // const session = await getServerSession(req, res, authOptions)
+  const session = await getServerSession(req, res, authOptions)
 
-  // const { user } = session || {}
+  const { user } = session || {}
+
+  const isMyPage = user?.id === id
 
   const foundUser = await prisma.user.findUnique({
     where: {
@@ -90,6 +101,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         ...rating,
         created_at: rating.created_at.toISOString(),
       })),
+      isMyPage,
     },
   }
 }

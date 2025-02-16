@@ -7,6 +7,7 @@ import React, {
 } from 'react'
 import {
   ChartIcon,
+  GoBackContainer,
   ProfileFeedSectionContainer,
   RatingsContainer,
   TitleContainer,
@@ -15,15 +16,19 @@ import { ProfileFeedCard, RatingData } from '../profileFeedCard'
 import { Input } from '@/components/input'
 import { useIsMounted } from '@/hooks/isMountedHook'
 import { getUserEvaluationsService } from '@/services/getUserEvaluationsService'
+import { CaretLeft } from '@phosphor-icons/react'
+import { useRouter } from 'next/router'
 
 interface ProfileFeedSectionProps {
   ratings: RatingData[]
   userId: string
+  isMyPage: boolean
 }
 
 export const ProfileFeedSection: React.FC<ProfileFeedSectionProps> = ({
   ratings,
   userId,
+  isMyPage,
 }) => {
   const [loadedRatings, setLoadedRatings] =
     useState<ProfileFeedSectionProps['ratings']>(ratings)
@@ -31,6 +36,8 @@ export const ProfileFeedSection: React.FC<ProfileFeedSectionProps> = ({
   const [searchText, setSearchText] = useState('')
 
   const { isCurrent } = useIsMounted()
+
+  const router = useRouter()
 
   const isTyping = useRef(false)
 
@@ -77,10 +84,18 @@ export const ProfileFeedSection: React.FC<ProfileFeedSectionProps> = ({
 
   return (
     <ProfileFeedSectionContainer>
-      <TitleContainer>
-        <ChartIcon />
-        <h2>Perfil</h2>
-      </TitleContainer>
+      {isMyPage ? (
+        <TitleContainer>
+          <ChartIcon />
+          <h2>Perfil</h2>
+        </TitleContainer>
+      ) : (
+        <GoBackContainer onClick={() => router.back()}>
+          <CaretLeft size={20} />
+          <span>Voltar</span>
+        </GoBackContainer>
+      )}
+
       <Input
         placeholder="Buscar livro avaliado"
         onChange={handleSearch}

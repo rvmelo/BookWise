@@ -30,3 +30,19 @@ export const RatingsContainer = styled('div', {
   marginTop: '$8',
   paddingBottom: '5.25rem',
 })
+
+export const GoBackContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: '$3',
+  marginBottom: '$10',
+
+  cursor: 'pointer',
+
+  span: {
+    fontSize: '$md',
+    fontWeight: '$bold',
+    color: '$gray200',
+  },
+})
