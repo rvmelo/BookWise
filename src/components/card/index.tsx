@@ -51,10 +51,18 @@ export const Card: React.FC<CardProps> = ({
 
   const router = useRouter()
 
+  const handleNavigation = () => {
+    if (!user?.id) {
+      return
+    }
+
+    router.push(`/profile/${user?.id}`)
+  }
+
   return (
     <CardContainer
       shouldDisplayHeader={shouldDisplayHeader}
-      onClick={() => router.push(`/profile/${user?.id}`)}
+      onClick={handleNavigation}
     >
       {shouldDisplayHeader && (
         <Header>

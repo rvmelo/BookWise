@@ -54,6 +54,9 @@ export default async function handler(
             },
           },
         },
+        orderBy: {
+          created_at: 'desc',
+        },
       },
       categories: {
         include: {
