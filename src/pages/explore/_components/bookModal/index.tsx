@@ -117,7 +117,7 @@ export const BookModal: React.FC<BookModalProps> = ({
               <BookIcon size={19} />
               <TextInfoContainer>
                 <span>Páginas</span>
-                <h2>160</h2>
+                <h2>{book.total_pages}</h2>
               </TextInfoContainer>
             </InfoContainer>
           </BookBottomContainer>

@@ -39,6 +39,7 @@ export default async function handler(
       author: true,
       name: true,
       cover_url: true,
+      total_pages: true,
       ratings: {
         select: {
           id: true,
