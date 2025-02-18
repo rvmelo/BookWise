@@ -27,7 +27,8 @@ import { getBooksByCategoryOrAuthor } from '@/services/getBooksByCategoryOrAutho
 import { BookCategory } from '@/enums/bookCategory'
 import { useIsMounted } from '@/hooks/isMountedHook'
 import { BookModal } from './_components/bookModal'
-import { BookData, getBookById } from '@/services/getBookByIdService'
+import { getBookById } from '@/services/getBookByIdService'
+import { useQuery } from '@tanstack/react-query'
 
 export default function Explore({
   bookEvaluationsData,
@@ -39,7 +40,7 @@ export default function Explore({
     BookCategory.ALL,
   )
 
-  const [selectedBook, setSelectedBook] = useState<BookData>()
+  const [selectedBookId, setSelectedBookId] = useState('')
 
   const [searchText, setSearchText] = useState('')
 
@@ -71,10 +72,23 @@ export default function Explore({
   )
 
   const handleBookClick = useCallback(async (id: string) => {
-    const { book } = (await getBookById({ id })) || {}
-
-    setSelectedBook(book)
+    setSelectedBookId(id)
   }, [])
+
+  const { data: bookData, isFetching } = useQuery({
+    queryKey: ['books', selectedBookId],
+    queryFn: async () => {
+      if (!selectedBookId) return
+
+      const response = await getBookById({ id: selectedBookId })
+
+      return response
+    },
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  })
+
+  const { book: selectedBook } = bookData || {}
 
   useEffect(() => {
     const waitTime = isTyping.current ? 500 : 0
@@ -94,7 +108,8 @@ export default function Explore({
           visible={!!selectedBook}
           rate={selectedBook.avgRate}
           book={selectedBook}
-          handleModalClose={() => setSelectedBook(undefined)}
+          handleModalClose={() => setSelectedBookId('')}
+          isLoading={isFetching}
         />
       )}
       <ExploreContainer>

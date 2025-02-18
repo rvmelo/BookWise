@@ -1,4 +1,4 @@
-import { styled } from '@/styles/stitches.config'
+import { keyframes, styled } from '@/styles/stitches.config'
 import { BookmarkSimple, BookOpen, Star } from '@phosphor-icons/react'
 
 export const BackDrop = styled('main', {
@@ -173,4 +173,27 @@ export const CommentsWrapper = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '$3',
+})
+
+const spin = keyframes({
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' },
+})
+
+export const Spinner = styled('div', {
+  border: '4px solid $purple100',
+  borderTop: '4px solid $white',
+  borderRadius: '50%',
+  width: '40px',
+  height: '40px',
+  animation: `${spin} 1s linear infinite`,
+})
+
+export const SpinnerContainer = styled('div', {
+  width: '100%',
+  padding: '$6',
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 })

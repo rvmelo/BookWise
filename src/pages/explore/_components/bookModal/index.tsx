@@ -17,6 +17,8 @@ import {
   InfoContainer,
   ModalBookContainer,
   SaveIcon,
+  Spinner,
+  SpinnerContainer,
   StarsContainer,
   StyledStar,
   TextInfoContainer,
@@ -32,6 +34,7 @@ interface BookModalProps {
   rate: number
   book: BookData
   handleModalClose: () => void
+  isLoading: boolean
 }
 
 export const BookModal: React.FC<BookModalProps> = ({
@@ -39,6 +42,7 @@ export const BookModal: React.FC<BookModalProps> = ({
   rate,
   book,
   handleModalClose,
+  isLoading,
 }) => {
   const starsArray = Array.from({ length: 5 })
 
@@ -130,6 +134,11 @@ export const BookModal: React.FC<BookModalProps> = ({
             <span>Avaliar</span>
           </EvaluationButton>
         </EvaluationHeader>
+        {isLoading && (
+          <SpinnerContainer>
+            <Spinner />
+          </SpinnerContainer>
+        )}
         {shouldDisplayEvaluationUI && (
           <EvaluationUI
             userName={user?.name || ''}

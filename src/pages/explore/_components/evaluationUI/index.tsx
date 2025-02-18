@@ -16,6 +16,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createUserRating } from '@/services/createUserRatingService'
 import { AxiosError } from 'axios'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface CommentInputProps {
   userName: string
@@ -61,6 +62,8 @@ export const EvaluationUI: React.FC<CommentInputProps> = ({
 
   const [text, setText] = useState('')
 
+  const queryClient = useQueryClient()
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value
     const charCount = newText.replace(/\s/g, '').length
@@ -76,6 +79,7 @@ export const EvaluationUI: React.FC<CommentInputProps> = ({
 
       handleFinishEvaluation()
       await createUserRating({ rate, description, bookId, id: userId })
+      queryClient.invalidateQueries({ queryKey: ['books', bookId] })
     } catch (err) {
       if (err instanceof AxiosError && err?.response?.data?.message) {
         alert(err.response.data.message)
