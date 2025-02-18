@@ -84,7 +84,6 @@ export default function Explore({
 
       return response
     },
-    refetchOnMount: false,
     refetchOnWindowFocus: false,
   })
 
